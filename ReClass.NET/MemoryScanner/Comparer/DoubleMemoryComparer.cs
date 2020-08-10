@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using ReClassNET.Extensions;
-using ReClassNET.Util;
 
 namespace ReClassNET.MemoryScanner.Comparer
 {
-	public class DoubleMemoryComparer : IScanComparer
+	public class DoubleMemoryComparer : ISimpleScanComparer
 	{
 		public ScanCompareType CompareType { get; }
 		public ScanRoundMode RoundType { get; }

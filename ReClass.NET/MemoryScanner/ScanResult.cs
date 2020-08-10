@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using ReClassNET.Extensions;
 
 namespace ReClassNET.MemoryScanner
 {
@@ -11,12 +12,16 @@ namespace ReClassNET.MemoryScanner
 
 		public IntPtr Address { get; set; }
 
+		public abstract int ValueSize { get; }
+
 		public abstract ScanResult Clone();
 	}
 
 	public class ByteScanResult : ScanResult, IEquatable<ByteScanResult>
 	{
 		public override ScanValueType ValueType => ScanValueType.Byte;
+
+		public override int ValueSize => sizeof(byte);
 
 		public byte Value { get; }
 
@@ -50,6 +55,8 @@ namespace ReClassNET.MemoryScanner
 	{
 		public override ScanValueType ValueType => ScanValueType.Short;
 
+		public override int ValueSize => sizeof(short);
+
 		public short Value { get; }
 
 		public ShortScanResult(short value)
@@ -81,6 +88,8 @@ namespace ReClassNET.MemoryScanner
 	public class IntegerScanResult : ScanResult, IEquatable<IntegerScanResult>
 	{
 		public override ScanValueType ValueType => ScanValueType.Integer;
+
+		public override int ValueSize => sizeof(int);
 
 		public int Value { get; }
 
@@ -114,6 +123,8 @@ namespace ReClassNET.MemoryScanner
 	{
 		public override ScanValueType ValueType => ScanValueType.Long;
 
+		public override int ValueSize => sizeof(long);
+
 		public long Value { get; }
 
 		public LongScanResult(long value)
@@ -145,6 +156,8 @@ namespace ReClassNET.MemoryScanner
 	public class FloatScanResult : ScanResult, IEquatable<FloatScanResult>
 	{
 		public override ScanValueType ValueType => ScanValueType.Float;
+
+		public override int ValueSize => sizeof(float);
 
 		public float Value { get; }
 
@@ -178,6 +191,8 @@ namespace ReClassNET.MemoryScanner
 	{
 		public override ScanValueType ValueType => ScanValueType.Double;
 
+		public override int ValueSize => sizeof(double);
+
 		public double Value { get; }
 
 		public DoubleScanResult(double value)
@@ -210,6 +225,8 @@ namespace ReClassNET.MemoryScanner
 	{
 		public override ScanValueType ValueType => ScanValueType.ArrayOfBytes;
 
+		public override int ValueSize => Value.Length;
+
 		public byte[] Value { get; }
 
 		public ArrayOfBytesScanResult(byte[] value)
@@ -231,7 +248,7 @@ namespace ReClassNET.MemoryScanner
 
 		public bool Equals(ArrayOfBytesScanResult other)
 		{
-			return other != null && Address == other.Address && Enumerable.SequenceEqual(Value, other.Value);
+			return other != null && Address == other.Address && Value.SequenceEqual(other.Value);
 		}
 
 		public override int GetHashCode()
@@ -243,6 +260,8 @@ namespace ReClassNET.MemoryScanner
 	public class StringScanResult : ScanResult, IEquatable<StringScanResult>
 	{
 		public override ScanValueType ValueType => ScanValueType.String;
+
+		public override int ValueSize => Value.Length * Encoding.GuessByteCountPerChar();
 
 		public string Value { get; }
 
@@ -275,6 +294,22 @@ namespace ReClassNET.MemoryScanner
 		public override int GetHashCode()
 		{
 			return Address.GetHashCode() * 19 + Value.GetHashCode() * 19 + Encoding.GetHashCode();
+		}
+	}
+
+	public class RegexStringScanResult : StringScanResult
+	{
+		public override ScanValueType ValueType => ScanValueType.Regex;
+
+		public RegexStringScanResult(string value, Encoding encoding)
+			: base(value, encoding)
+		{
+
+		}
+
+		public override ScanResult Clone()
+		{
+			return new RegexStringScanResult(Value, Encoding) { Address = Address };
 		}
 	}
 }

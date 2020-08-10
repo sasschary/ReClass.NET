@@ -242,17 +242,22 @@
     <Compile Include="MemoryScanner\Comparer\ByteMemoryComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\DoubleMemoryComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\FloatMemoryComparer.cs" />
+    <Compile Include="MemoryScanner\Comparer\IComplexScanComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\IScanComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\IntegerMemoryComparer.cs" />
+    <Compile Include="MemoryScanner\Comparer\ISimpleScanComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\LongMemoryComparer.cs" />
+    <Compile Include="MemoryScanner\Comparer\RegexStringMemoryComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\ShortMemoryComparer.cs" />
     <Compile Include="MemoryScanner\Comparer\StringMemoryComparer.cs" />
+    <Compile Include="MemoryScanner\ComplexScannerWorker.cs" />
     <Compile Include="MemoryScanner\InputCorrelatedScanner.cs" />
+    <Compile Include="MemoryScanner\IScannerWorker.cs" />
     <Compile Include="MemoryScanner\MemoryRecord.cs" />
     <Compile Include="MemoryScanner\PatternScanner.cs" />
     <Compile Include="MemoryScanner\ScanCompareType.cs" />
     <Compile Include="MemoryScanner\ScannerContext.cs" />
-    <Compile Include="MemoryScanner\ScannerWorker.cs" />
+    <Compile Include="MemoryScanner\SimpleScannerWorker.cs" />
     <Compile Include="MemoryScanner\ScanResultBlock.cs" />
     <Compile Include="MemoryScanner\ScanResultStore.cs" />
     <Compile Include="MemoryScanner\ScanValueType.cs" />
@@ -500,9 +505,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Memory\RemoteProcess.cs" />
-    <Compile Include="UI\ScrollableCustomControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Symbols\ComDisposableWrapper.cs" />
     <Compile Include="Symbols\SymbolReader.cs" />

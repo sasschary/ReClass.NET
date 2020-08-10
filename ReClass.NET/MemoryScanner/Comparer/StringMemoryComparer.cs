@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text;
 using ReClassNET.Extensions;
-using ReClassNET.Util;
 
 namespace ReClassNET.MemoryScanner.Comparer
 {
-	public class StringMemoryComparer : IScanComparer
+	public class StringMemoryComparer : ISimpleScanComparer
 	{
 		public ScanCompareType CompareType => ScanCompareType.Equal;
 		public bool CaseSensitive { get; }
@@ -26,7 +25,7 @@ namespace ReClassNET.MemoryScanner.Comparer
 		{
 			result = null;
 
-			var value = Encoding.GetString(data, index, Value.Length);
+			var value = Encoding.GetString(data, index, ValueSize);
 
 			if (!Value.Equals(value, CaseSensitive ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase))
 			{

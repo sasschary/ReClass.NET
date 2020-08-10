@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Diagnostics;
-using ReClassNET.Util;
 
 namespace ReClassNET.MemoryScanner.Comparer
 {
-	public class ByteMemoryComparer : IScanComparer
+	public class ByteMemoryComparer : ISimpleScanComparer
 	{
 		public ScanCompareType CompareType { get; }
 		public byte Value1 { get; }
